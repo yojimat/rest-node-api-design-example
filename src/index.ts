@@ -1,13 +1,12 @@
-import express from "express"
+import express from "express";
+import v1WourkoutRouter from "./v1/routes/workoutRoutes.js";
 
-const app = express()
+const app = express();
 const PORT = process.env.PORT || 3000;
 
-// For testing purposes
-app.get("/", (req, res) => {
-    res.send("<h1>It's Working!</h2>")
-})
+app.use("/api/v1/workouts", v1WourkoutRouter);
 
-app.listen(PORT, () => {
-    console.log(`API is listening on port http://localhost:${PORT}`)
-})
+app.get("/", (_, res) => res.redirect(`/api/v1/workouts`));
+app.get("/api/v1", (_, res) => res.redirect(`/api/v1/workouts`));
+
+app.listen(PORT, () => console.log(`API is listening on port http://localhost:${PORT}`));

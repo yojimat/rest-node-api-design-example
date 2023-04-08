@@ -9,15 +9,19 @@
         "lib": [
             "ESNext"
         ],
-        "rootDir": "./",
         "isolatedModules": true,
         "noFallthroughCasesInSwitch": true,
-        "baseUrl": "./",
+        "noUnusedLocals": true,
+        "baseUrl": "./src",
         "strict": true,
+        "noImplicitAny": true,
         "target": "ESNext",
+        "allowJs": true,
         "module": "ESNext",
         "moduleResolution": "nodenext",
         "esModuleInterop": true,
+        "incremental": true,
+        "allowUnreachableCode": false,
         "forceConsistentCasingInFileNames": true,
         "allowSyntheticDefaultImports": true,
         "types": [
@@ -26,6 +30,7 @@
         ]
     },
     "ts-node": {
-        "esm": true
+        "esm": true,
+        "files": true,
     }
 }
