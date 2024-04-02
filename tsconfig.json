@@ -24,6 +24,7 @@
         "allowUnreachableCode": false,
         "forceConsistentCasingInFileNames": true,
         "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
         "types": [
             "node",
             "express"

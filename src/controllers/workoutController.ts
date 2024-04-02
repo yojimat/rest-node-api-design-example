@@ -1,32 +1,76 @@
 import { Request, Response } from "express";
-// import workoutService from "../services/workoutService.js";
+import {
+  getAllWorkouts as getAllWorkoutsService,
+  createNewWorkout as createNewWorkoutService,
+  getOneWorkout as getOneWorkoutService,
+  updateOneWorkout as updateOneWorkoutService,
+  deleteOneWorkout as deleteOneWorkoutService
+} from "../services/workoutService.js";
+import { Workout } from "models/Workout.js";
 // When the API is growing, it's better to split the code into different files and folders.
 // Moving the controllers folder to v2 and so on, when v2 requires different controller methods.
 // This also also relates to the service folder.
 
 const getAllWorkouts = (req: Request, res: Response) => {
-  // const allWorkouts = workoutService.getAllWorkouts();
-  res.send("Get all workouts");
+  const allWorkouts = getAllWorkoutsService();
+  res.send({ status: "OK", data: allWorkouts });
 };
 
 const getOneWorkout = (req: Request, res: Response) => {
-  // const workout = workoutService.getOneWorkout();
-  res.send("Get an existing workout");
+  const {
+    params: { workoutId },
+  } = req;
+  if (!workoutId) {
+    return res.status(400);
+  }
+  const workout = getOneWorkoutService(workoutId);
+  res.send({ status: "OK", data: workout });
 };
 
 const createNewWorkout = (req: Request, res: Response) => {
-  // const createdWorkout = workoutService.createNewWorkout();
-  res.send("Create a new workout");
+  const { body } = req;
+  // I could use a library like express-validator to validate the body
+  if (
+    !body.name ||
+    !body.mode ||
+    !body.equipment ||
+    !body.exercises ||
+    !body.trainerTips
+  ) {
+    return res.status(400);
+  }
+  const newWorkout: Workout = {
+    name: body.name,
+    mode: body.mode,
+    equipment: body.equipment,
+    exercises: body.exercises,
+    trainerTips: body.trainerTips
+  };
+  const createdWorkout = createNewWorkoutService(newWorkout);
+  res.status(201).send({ status: "OK", data: createdWorkout });
 };
 
 const updateOneWorkout = (req: Request, res: Response) => {
-  //const updatedWorkout = workoutService.updateOneWorkout();
-  res.send("Update an existing workout");
+  const {
+    body,
+    params: { workoutId },
+  } = req;
+  if (!workoutId) {
+    return;
+  }
+  const updatedWorkout = updateOneWorkoutService(workoutId, body);
+  res.send({ status: "OK", data: updatedWorkout });
 };
 
 const deleteOneWorkout = (req: Request, res: Response) => {
-  // const deletedWorkout = workoutService.deleteOneWorkout();
-  res.send("Delete an existing workout");
+  const {
+    params: { workoutId },
+  } = req;
+  if (!workoutId) {
+    return;
+  }
+  deleteOneWorkoutService(workoutId);
+  res.status(204).send({ status: "OK" });
 };
 
 export { getAllWorkouts, getOneWorkout, createNewWorkout, updateOneWorkout, deleteOneWorkout };
