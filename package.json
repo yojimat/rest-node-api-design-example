@@ -1,7 +1,7 @@
 {
   "name": "crossfit-wod-api",
   "version": "1.0.0",
-  "description": "REST API inspired by this a tutorial of [freeCodeCamp](https://www.freecodecamp.org/news/rest-api-design-best-practices-build-a-rest-api/#our-example-project). A CRUD application for the workouts of the day. The workouts can have tips on how to perform it.   It is a [Client-Server-Mode](https://en.wikipedia.org/wiki/Client%E2%80%93server_model) distributed application.",
+  "description": "REST API inspired by a tutorial of [freeCodeCamp](https://www.freecodecamp.org/news/rest-api-design-best-practices-build-a-rest-api/#our-example-project). A CRUD application for the workouts of the day. The workouts can have tips on how to perform it. It is a [Client-Server-Mode](https://en.wikipedia.org/wiki/Client%E2%80%93server_model) distributed application.",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

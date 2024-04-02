@@ -5,7 +5,7 @@ It is a [Client-Server-Mode](https://en.wikipedia.org/wiki/Client%E2%80%93server
 
 ## Architecture
 
-![3-layer-architecteture](images\3-layer-architecture.png)
+![3-layer-architecteture](/images/3-layer-architecture.png)
 
 ## Installation
 
@@ -21,7 +21,7 @@ $ npm install
 
 ```bash
 # Run the application
-$ npm start
+$ npm dev
 ```
 
 ## Contributing
