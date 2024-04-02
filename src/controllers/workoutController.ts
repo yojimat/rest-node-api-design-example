@@ -12,8 +12,15 @@ import { Workout } from "models/Workout.js";
 // This also also relates to the service folder.
 
 const getAllWorkouts = (req: Request, res: Response) => {
-  const allWorkouts = getAllWorkoutsService();
-  res.send({ status: "OK", data: allWorkouts });
+
+  try {
+    const allWorkouts = getAllWorkoutsService();
+    res.send({ status: "OK", data: allWorkouts });
+  } catch (error: any) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const getOneWorkout = (req: Request, res: Response) => {
@@ -21,10 +28,21 @@ const getOneWorkout = (req: Request, res: Response) => {
     params: { workoutId },
   } = req;
   if (!workoutId) {
-    return res.status(400);
+    return res
+      .status(400)
+      .send({
+        status: "FAILED",
+        data: { error: "Parameter ':workoutId' can not be empty" },
+      });
   }
-  const workout = getOneWorkoutService(workoutId);
-  res.send({ status: "OK", data: workout });
+  try {
+    const workout = getOneWorkoutService(workoutId);
+    res.send({ status: "OK", data: workout });
+  } catch (error: any) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const createNewWorkout = (req: Request, res: Response) => {
@@ -37,7 +55,15 @@ const createNewWorkout = (req: Request, res: Response) => {
     !body.exercises ||
     !body.trainerTips
   ) {
-    return res.status(400);
+    return res
+      .status(400)
+      .send({
+        status: "FAILED",
+        data: {
+          error:
+            "One of the following keys is missing or is empty in request body: 'name', 'mode', 'equipment', 'exercises', 'trainerTips'",
+        },
+      });
   }
   const newWorkout: Workout = {
     name: body.name,
@@ -46,8 +72,14 @@ const createNewWorkout = (req: Request, res: Response) => {
     exercises: body.exercises,
     trainerTips: body.trainerTips
   };
-  const createdWorkout = createNewWorkoutService(newWorkout);
-  res.status(201).send({ status: "OK", data: createdWorkout });
+  try {
+    const createdWorkout = createNewWorkoutService(newWorkout);
+    res.status(201).send({ status: "OK", data: createdWorkout });
+  } catch (error: any) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const updateOneWorkout = (req: Request, res: Response) => {
@@ -56,10 +88,21 @@ const updateOneWorkout = (req: Request, res: Response) => {
     params: { workoutId },
   } = req;
   if (!workoutId) {
-    return;
+    return res
+      .status(400)
+      .send({
+        status: "FAILED",
+        data: { error: "Parameter ':workoutId' can not be empty" },
+      });
   }
-  const updatedWorkout = updateOneWorkoutService(workoutId, body);
-  res.send({ status: "OK", data: updatedWorkout });
+  try {
+    const updatedWorkout = updateOneWorkoutService(workoutId, body);
+    res.send({ status: "OK", data: updatedWorkout });
+  } catch (error: any) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 const deleteOneWorkout = (req: Request, res: Response) => {
@@ -67,10 +110,21 @@ const deleteOneWorkout = (req: Request, res: Response) => {
     params: { workoutId },
   } = req;
   if (!workoutId) {
-    return;
+    return res
+      .status(400)
+      .send({
+        status: "FAILED",
+        data: { error: "Parameter ':workoutId' can not be empty" },
+      });
   }
-  deleteOneWorkoutService(workoutId);
-  res.status(204).send({ status: "OK" });
+  try {
+    deleteOneWorkoutService(workoutId);
+    res.status(204).send({ status: "OK" });
+  } catch (error: any) {
+    res
+      .status(error?.status || 500)
+      .send({ status: "FAILED", data: { error: error?.message || error } });
+  }
 };
 
 export { getAllWorkouts, getOneWorkout, createNewWorkout, updateOneWorkout, deleteOneWorkout };

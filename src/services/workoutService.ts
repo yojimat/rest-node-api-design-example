@@ -9,11 +9,19 @@ import { Workout } from 'models/Workout.js';
 import { v4 as uuid } from 'uuid';
 
 const getAllWorkouts = () => {
-  return getAllWorkoutsDB()
+  try {
+    return getAllWorkoutsDB()
+  } catch (error) {
+    throw error;
+  }
 };
 
 const getOneWorkout = (id: string) => {
-  return getOneWorkoutDB(id);
+  try {
+    return getOneWorkoutDB(id);
+  } catch (error) {
+    throw error;
+  }
 };
 
 const createNewWorkout = (newWorkout: Workout) => {
@@ -23,16 +31,27 @@ const createNewWorkout = (newWorkout: Workout) => {
     createdAt: new Date().toLocaleString("en-US", { timeZone: "UTC" }),
     updatedAt: new Date().toLocaleString("en-US", { timeZone: "UTC" }),
   };
-  const createdWorkout = createNewWorkoutDB(workoutToInsert);
-  return createdWorkout;
+  try {
+    return createNewWorkoutDB(workoutToInsert);
+  } catch (error) {
+    throw error;
+  }
 };
 
 const updateOneWorkout = (id: string, changes: Workout) => {
-  return updateOneWorkoutDB(id, changes);
+  try {
+    return updateOneWorkoutDB(id, changes);
+  } catch (error) {
+    throw error;
+  }
 };
 
 const deleteOneWorkout = (id: string) => {
-  deleteOneWorkoutDB(id);
+  try {
+    deleteOneWorkoutDB(id);
+  } catch (error) {
+    throw error;
+  }
 };
 
 export {
