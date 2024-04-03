@@ -5,6 +5,7 @@ import {
   updateOneWorkout,
   deleteOneWorkout
 } from "../../controllers/workoutController.js";
+import { getRecordForWorkout } from "../../controllers/recordController.js";
 import express from "express";
 
 const router = express.Router();
@@ -12,6 +13,8 @@ const router = express.Router();
 router.get("/", getAllWorkouts);
 
 router.get("/:workoutId", getOneWorkout);
+
+router.get("/:workoutId/records", getRecordForWorkout);
 
 router.post("/", createNewWorkout);
 
