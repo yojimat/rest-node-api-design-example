@@ -1,3 +1,4 @@
+import { FilterParams } from 'models/FilterParams.js';
 import {
   getAllWorkouts as getAllWorkoutsDB,
   createNewWorkout as createNewWorkoutDB,
@@ -8,9 +9,9 @@ import {
 import { Workout } from 'models/Workout.js';
 import { v4 as uuid } from 'uuid';
 
-const getAllWorkouts = () => {
+const getAllWorkouts = (filterParams: FilterParams) => {
   try {
-    return getAllWorkoutsDB()
+    return getAllWorkoutsDB(filterParams)
   } catch (error) {
     throw error;
   }

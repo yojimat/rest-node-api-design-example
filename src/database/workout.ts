@@ -3,10 +3,14 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const DB = require("./db.json");
 import { saveToDatabase } from './utils.js';
+import { FilterParams } from 'models/FilterParams.js';
 
-const getAllWorkouts = () => {
+const getAllWorkouts = (filterParams: FilterParams) => {
   try {
-    return DB.workouts;
+    let workouts = DB.workouts;
+    if (!filterParams.mode) return workouts;
+    return workouts.filter((workout: Workout) =>
+      workout.mode.toLowerCase().includes(filterParams.mode!.toLowerCase()))
   } catch (error) {
     throw { status: 500, message: error };
   }

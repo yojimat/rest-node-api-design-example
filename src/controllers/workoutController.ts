@@ -7,14 +7,18 @@ import {
   deleteOneWorkout as deleteOneWorkoutService
 } from "../services/workoutService.js";
 import { Workout } from "models/Workout.js";
+import { FilterParams } from "models/FilterParams.js";
 // When the API is growing, it's better to split the code into different files and folders.
 // Moving the controllers folder to v2 and so on, when v2 requires different controller methods.
 // This also also relates to the service folder.
 
 const getAllWorkouts = (req: Request, res: Response) => {
-
+  const { mode } = req.query;
+  const filterParams: FilterParams = {};
+  if (typeof mode === 'string')
+    filterParams.mode = mode;
   try {
-    const allWorkouts = getAllWorkoutsService();
+    const allWorkouts = getAllWorkoutsService(filterParams);
     res.send({ status: "OK", data: allWorkouts });
   } catch (error: any) {
     res
